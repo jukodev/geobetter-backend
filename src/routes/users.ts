@@ -6,10 +6,11 @@ import { eq } from 'drizzle-orm';
 const userRouter = Router();
 
 userRouter.get('/:id', async (req: Request, res: Response) => {
-  const nick = req.params.id;
+  let nick = req.params.id;
   if (!nick) {
     return res.status(400).json({ error: 'User ID is required' });
   }
+  nick = decodeURIComponent(nick);
 
   const user = await db
     .selectDistinct()
