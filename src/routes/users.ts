@@ -15,13 +15,11 @@ userRouter.get('/:id', async (req: Request, res: Response) => {
     .selectDistinct()
     .from(users)
     .where(eq(users.nick, nick));
-  if (!user) {
+  if (!user || user.length === 0) {
     return res.status(404).json({ error: 'User not found' });
   }
-  console.log(user);
 
-  // Logic to fetch user by ID
-  res.status(200).json(user);
+  res.status(200).json(user[0]);
 });
 
 userRouter.get('/', async (req: Request, res: Response) => {
